@@ -26,3 +26,39 @@ print(f"Sleep rows: {len(sleep)}")
 print(f"RHR rows: {len(rhr)}")
 print(f"Respiratory Rate rows: {len(rr)}")
 print(f"VO2Max rows: {len(vo2)}")
+
+readiness = (
+    hrv
+    .merge(rhr, on="date", how="outer")
+    .merge(sleep, on="date", how="outer")
+    .merge(rr, on="date", how="outer")
+)
+
+readiness = readiness.sort_values("date")
+
+print("\nReadiness Dataset")
+print("=" * 50)
+print(f"Rows: {len(readiness)}")
+
+print("\nColumns:")
+print(readiness.columns)
+
+print("\nFirst 5 rows:")
+print(readiness.head())
+
+print("\nMissing values:")
+print("=" * 50)
+
+print(readiness.isna().sum())
+
+print("\nComplete records:")
+print("=" * 50)
+
+complete = readiness.dropna(
+    subset=[
+        "hrv_mean",
+        "rhr_mean"
+    ]
+)
+
+print("Rows with HRV + RHR:", len(complete))
