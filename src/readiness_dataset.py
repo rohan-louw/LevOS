@@ -62,3 +62,11 @@ complete = readiness.dropna(
 )
 
 print("Rows with HRV + RHR:", len(complete))
+
+readiness.to_csv(
+    data_folder / "readiness_dataset.csv",
+    index=False
+)
+
+print("\nSaved:")
+print(data_folder / "readiness_dataset.csv")
