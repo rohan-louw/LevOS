@@ -32,7 +32,17 @@ readiness = (
     .merge(rhr, on="date", how="outer")
     .merge(sleep, on="date", how="outer")
     .merge(rr, on="date", how="outer")
+
 )
+
+readiness = readiness.rename(columns={
+    "HKCategoryValueSleepAnalysisAsleepCore": "sleep_core",
+    "HKCategoryValueSleepAnalysisAsleepDeep": "sleep_deep",
+    "HKCategoryValueSleepAnalysisAsleepREM": "sleep_rem",
+    "HKCategoryValueSleepAnalysisAwake": "sleep_awake",
+    "HKCategoryValueSleepAnalysisInBed": "sleep_in_bed",
+    "HKCategoryValueSleepAnalysisAsleepUnspecified": "sleep_unspecified"
+})
 
 readiness = readiness.sort_values("date")
 
