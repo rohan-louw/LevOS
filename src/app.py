@@ -17,15 +17,33 @@ df = pd.read_csv(
 st.title("LevOS")
 st.subheader("Human Performance Operating System")
 
+
 latest_score = round(
     df["readiness_score"].iloc[-1],
     1
 )
 
-st.metric(
-    label="Today's Readiness",
-    value=latest_score
-)
+latest = df.iloc[-1]
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        label="Readiness",
+        value=latest_score
+    )
+
+with col2:
+    st.metric(
+        label="HRV",
+        value=round(latest["hrv_mean"], 1)
+    )
+
+with col3:
+    st.metric(
+        label="Sleep",
+        value=f"{round(latest['total_sleep'], 1)} h"
+    )
 
 chart_df = df[["date", "readiness_score"]].copy()
 chart_df["date"] = pd.to_datetime(chart_df["date"])
