@@ -61,7 +61,7 @@ chart_df = chart_df.set_index("date")
 chart_df["readiness_7d"] = chart_df["readiness_score"].rolling(7).mean()
 
 st.subheader("Readiness Trend — Last 90 Records")
-st.line_chart(chart_df[["readiness_7d"]])
+st.line_chart(chart_df[["readiness_score"]])
 
 st.subheader("Recent Scores")
 
