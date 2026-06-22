@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from pathlib import Path
 import pandas as pd
 
@@ -44,6 +45,29 @@ df["readiness_score"] = (
 )
 
 df["readiness_score"] = df["readiness_score"].clip(0, 100)
+
+# Create readiness trend chart
+
+plt.figure(figsize=(12, 6))
+
+plt.plot(
+    pd.to_datetime(df["date"]),
+    df["readiness_score"],
+    marker=".",
+    linestyle="None"
+)
+
+plt.title("LevOS Readiness Score")
+plt.xlabel("Date")
+plt.ylabel("Readiness Score")
+plt.grid(True)
+
+chart_path = data_folder / "readiness_trend.png"
+
+plt.savefig(chart_path, bbox_inches="tight")
+plt.close()
+
+print(f"Chart saved to: {chart_path}")
 
 output_path = data_folder / "readiness_scores.csv"
 df.to_csv(output_path, index=False)
