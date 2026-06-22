@@ -55,6 +55,17 @@ with col3:
 with col4:
     st.metric("90d Avg", avg_readiness)
 
+if latest_score >= 90:
+    recovery_status = "Excellent Recovery"
+elif latest_score >= 75:
+    recovery_status = "Good Recovery"
+elif latest_score >= 60:
+    recovery_status = "Moderate Recovery"
+else:
+    recovery_status = "Poor Recovery"
+
+st.subheader(f"Recovery Status: {recovery_status}")
+
 chart_df = recent_df[["date", "readiness_score"]].copy()
 chart_df = chart_df.set_index("date")
 
