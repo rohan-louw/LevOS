@@ -21,27 +21,23 @@ df = df.dropna(subset=[
 
 df["hrv_score"] = (df["hrv_mean"] / df["hrv_30d_avg"]) * 100
 df["rhr_score"] = (df["rhr_30d_avg"] / df["rhr_mean"]) * 100
-df["total_sleep"] = (
-    df["sleep_core"] +
-    df["sleep_deep"] +
-    df["sleep_rem"]
+df["total_sleep"] = (df["sleep_core"] + df["sleep_deep"] + df["sleep_rem"]
 )
 
-df["total_sleep"] = (
-    df["sleep_core"] +
-    df["sleep_deep"] +
-    df["sleep_rem"]
+df["total_sleep"] = (df["sleep_core"] + df["sleep_deep"] + df["sleep_rem"]
 )
 
-df["sleep_score"] = (df["total_sleep"] / 8) * 100
+df["sleep_score"] = (df["total_sleep"] / 8.5) * 100
 
-df["deep_sleep_score"] = (df["sleep_deep"] / 1.0) * 100
+df["deep_sleep_score"] = (df["sleep_deep"] / 1.25) * 100
 
-df["readiness_score"] = (
-    df["hrv_score"] * 0.40 +
-    df["rhr_score"] * 0.30 +
-    df["sleep_score"] * 0.20 +
-    df["deep_sleep_score"] * 0.10
+df["hrv_score"] = df["hrv_score"].clip(0, 100)
+df["rhr_score"] = df["rhr_score"].clip(0, 100)
+df["sleep_score"] = df["sleep_score"].clip(0, 100)
+df["deep_sleep_score"] = df["deep_sleep_score"].clip(0, 100)
+
+
+df["readiness_score"] = (df["hrv_score"] * 0.40 + df["rhr_score"] * 0.30 + df["sleep_score"] * 0.20 + df["deep_sleep_score"] * 0.10
 )
 
 df["readiness_score"] = df["readiness_score"].clip(0, 100)
